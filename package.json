@@ -11,9 +11,65 @@
 		"Other"
 	],
 	"activationEvents": [
+		"onCommand:multicursor-insanity.groupAbove",
+		"onCommand:multicursor-insanity.groupBelow",
+		"onCommand:multicursor-insanity.copyAbove",
+		"onCommand:multicursor-insanity.copyBelow"
 	],
 	"main": "./extension.js",
 	"contributes": {
+		"commands": [
+			{
+				"command": "multicursor-insanity.groupAbove",
+				"title": "multicursor-insanity: groupAbove"
+			},
+			{
+				"command": "multicursor-insanity.groupBelow",
+				"title": "multicursor-insanity: groupBelow"
+			},
+			{
+				"command": "multicursor-insanity.copyAbove",
+				"title": "multicursor-insanity: copyAbove"
+			},
+			{
+				"command": "multicursor-insanity.copyBelow",
+				"title": "multicursor-insanity: copyBelow"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "multicursor-insanity.groupAbove",
+				"key": "shift+alt+up",
+				"win": "shift+alt+up",
+				"mac": "shift+alt+up",
+				"linux": "shift+alt+up",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "multicursor-insanity.groupBelow",
+				"key": "shift+alt+down",
+				"win": "shift+alt+down",
+				"mac": "shift+alt+down",
+				"linux": "shift+alt+down",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "multicursor-insanity.copyAbove",
+				"key": "ctrl+shift+up",
+				"win": "ctrl+shift+up",
+				"mac": "cmd+shift+up",
+				"linux": "ctrl+shift+up",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "multicursor-insanity.copyBelow",
+				"key": "ctrl+shift+down",
+				"win": "ctrl+shift+down",
+				"mac": "cmd+shift+down",
+				"linux": "ctrl+shift+down",
+				"when": "editorTextFocus"
+			}
+		]
 	},
 	"scripts": {
 		"ext": "vsce package -o multicursor-insanity.vsix && code --install-extension multicursor-insanity.vsix"

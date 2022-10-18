@@ -1,0 +1,18 @@
+allWhiteSpace -> skipWhiteSpaceLines
+else:
+    nextLine:allWhiteSpace -> skipWhiteSpaceLines
+    nextLine:isSame_preStr -> addBothLines
+    else -> addSecondLine
+
+loop 1 {
+    if (allWhiteSpace) {
+        if (nextLine:allWhiteSpace) {
+            addFirstLine
+        } else {
+            update_preStr ;toShorterOrLonger
+        }
+        addSecondLine
+        break
+    }
+    skipWhiteSpaceLines
+}
