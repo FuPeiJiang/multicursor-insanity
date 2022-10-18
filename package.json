@@ -1,0 +1,24 @@
+{
+	"name": "multicursor-insanity",
+	"displayName": "multicursor-insanity",
+	"repository": "none",
+	"description": "",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.69.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+	],
+	"main": "./extension.js",
+	"contributes": {
+	},
+	"scripts": {
+		"ext": "vsce package -o multicursor-insanity.vsix && code --install-extension multicursor-insanity.vsix"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.69.0"
+	}
+}
