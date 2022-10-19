@@ -84,7 +84,7 @@ function activate(context) {
 			i--
 		}
 		activeEditor.selections = newSelections
-
+		vscode.commands.executeCommand("revealLine", {lineNumber: i, at: 'top'})
 
 	}))
 	context.subscriptions.push(vscode.commands.registerCommand('multicursor-insanity.groupBelow', function () {
@@ -154,7 +154,7 @@ function activate(context) {
 			i++
 		}
 		activeEditor.selections = newSelections
-
+		vscode.commands.executeCommand("revealLine", {lineNumber: i, at: 'bottom'})
 	}))
 
 	context.subscriptions.push(vscode.commands.registerCommand('multicursor-insanity.copyAbove', async function () {
@@ -221,6 +221,7 @@ function activate(context) {
 		}
 		activeEditor.selections = newSelections
 
+		vscode.commands.executeCommand("revealLine", {lineNumber: selections.length + offset, at: 'bottom'})
 	}))
 	function indexOfNonWhiteSpace(str) {
 		for (let j = 0; j < str.length; j++) {
