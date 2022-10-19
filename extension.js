@@ -83,8 +83,10 @@ function activate(context) {
 			newSelections.push(new vscode.Selection(position,position))
 			i--
 		}
-		activeEditor.selections = newSelections
-		vscode.commands.executeCommand("revealLine", {lineNumber: i, at: 'top'})
+		if (newSelections.length) {
+			activeEditor.selections = newSelections
+			vscode.commands.executeCommand("revealLine", {lineNumber: i, at: 'top'})
+		}
 
 	}))
 	context.subscriptions.push(vscode.commands.registerCommand('multicursor-insanity.groupBelow', function () {
@@ -153,8 +155,10 @@ function activate(context) {
 			newSelections.push(new vscode.Selection(position,position))
 			i++
 		}
-		activeEditor.selections = newSelections
-		vscode.commands.executeCommand("revealLine", {lineNumber: i, at: 'bottom'})
+		if (newSelections.length) {
+			activeEditor.selections = newSelections
+			vscode.commands.executeCommand("revealLine", {lineNumber: i, at: 'bottom'})
+		}
 	}))
 
 	context.subscriptions.push(vscode.commands.registerCommand('multicursor-insanity.copyAbove', async function () {
