@@ -14,7 +14,11 @@
 		"onCommand:multicursor-insanity.groupAbove",
 		"onCommand:multicursor-insanity.groupBelow",
 		"onCommand:multicursor-insanity.copyAbove",
-		"onCommand:multicursor-insanity.copyBelow"
+		"onCommand:multicursor-insanity.copyBelow",
+		"onCommand:multicursor-insanity.fastRight",
+		"onCommand:multicursor-insanity.fastWord",
+		"onCommand:multicursor-insanity.halfWordLeft",
+		"onCommand:multicursor-insanity.halfWordRight"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -34,6 +38,22 @@
 			{
 				"command": "multicursor-insanity.copyBelow",
 				"title": "multicursor-insanity: copyBelow"
+			},
+			{
+				"command": "multicursor-insanity.fastRight",
+				"title": "multicursor-insanity: fastRight"
+			},
+			{
+				"command": "multicursor-insanity.fastWord",
+				"title": "multicursor-insanity: fastWord"
+			},
+			{
+				"command": "multicursor-insanity.halfWordLeft",
+				"title": "multicursor-insanity: halfWordLeft"
+			},
+			{
+				"command": "multicursor-insanity.halfWordRight",
+				"title": "multicursor-insanity: halfWordRight"
 			}
 		],
 		"keybindings": [

@@ -5,6 +5,9 @@ const vscode = require('vscode');
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
+const CAPS_AZ=new Set(["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"])
+const NOT_WORD=new Set([" ", "\t", ".", "(", ")", "[", "]", "{", "}"])
+
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -226,6 +229,93 @@ function activate(context) {
 		activeEditor.selections = newSelections
 
 		vscode.commands.executeCommand("revealLine", {lineNumber: selections.length + offset, at: 'bottom'})
+	}))
+	context.subscriptions.push(vscode.commands.registerCommand('multicursor-insanity.fastRight', async function () {
+		const activeEditor = vscode.window.activeTextEditor
+		const selections = activeEditor.selections
+
+		const newSelections=[]
+		for (let i = 0; i < selections.length; i++) {
+			const position_ = new vscode.Position(selections[i].active.line, selections[i].active.character + 3)
+			newSelections.push(new vscode.Selection(position_, position_))
+		}
+		activeEditor.selections = newSelections
+	}))
+	context.subscriptions.push(vscode.commands.registerCommand('multicursor-insanity.fastWord', async function () {
+		const activeEditor = vscode.window.activeTextEditor
+		const selections = activeEditor.selections
+
+		const newSelections=[]
+		for (let i = 0; i < selections.length; i++) {
+			const line_ = activeEditor.document.lineAt(selections[i].active.line).text
+			let restOfLine
+			let endPos = selections[i].active.character
+			for (let i = 0; i < 3; i++) {
+				restOfLine = line_.slice(endPos)
+				const matches = restOfLine.match(/[^.\- \t\(\)\[\]\{\}\$`"'\/,]+/)
+				endPos += matches.index + matches[0].length
+				console.log(matches[0])
+			}
+			const position_ = new vscode.Position(selections[i].active.line, endPos)
+			newSelections.push(new vscode.Selection(position_, position_))
+		}
+		activeEditor.selections = newSelections
+	}))
+	context.subscriptions.push(vscode.commands.registerCommand('multicursor-insanity.halfWordLeft', async function () {
+		const activeEditor = vscode.window.activeTextEditor
+		const selections = activeEditor.selections
+
+		const newSelections=[]
+		for (let i = 0; i < selections.length; i++) {
+			const line_ = activeEditor.document.lineAt(selections[i].active.line).text
+			let restOfLine
+
+			let c_ = selections[i].active.character-1
+			let activeChar = c_
+			while (c_ > -1) {
+				if (CAPS_AZ.has(line_[c_])) {
+					activeChar = c_
+					break
+				}
+				if (NOT_WORD.has(line_[c_])) {
+					activeChar = c_ + 1
+					break
+				}
+				c_--
+			}
+
+			const activePos = new vscode.Position(selections[i].active.line, activeChar)
+			newSelections.push(new vscode.Selection(selections[i].anchor, activePos))
+		}
+		activeEditor.selections = newSelections
+	}))
+	context.subscriptions.push(vscode.commands.registerCommand('multicursor-insanity.halfWordRight', async function () {
+		const activeEditor = vscode.window.activeTextEditor
+		const selections = activeEditor.selections
+
+		const newSelections=[]
+		for (let i = 0; i < selections.length; i++) {
+			const line_ = activeEditor.document.lineAt(selections[i].active.line).text
+			let restOfLine
+
+			let c_ = selections[i].active.character + 1
+			let activeChar = c_
+			while (c_ < line_.length) {
+				if (CAPS_AZ.has(line_[c_])) {
+					activeChar = c_
+					break
+				}
+				if (NOT_WORD.has(line_[c_])) {
+					activeChar = c_
+					break
+				}
+				c_++
+			}
+
+			const activePos = new vscode.Position(selections[i].active.line, activeChar)
+			newSelections.push(new vscode.Selection(selections[i].anchor, activePos))
+		}
+		activeEditor.selections = newSelections
 	}))
 	function indexOfNonWhiteSpace(str) {
 		for (let j = 0; j < str.length; j++) {
